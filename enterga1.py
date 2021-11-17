@@ -5,8 +5,8 @@ pygame.init()
 # ----- Gera tela principal
 largura = 700
 altura = 600
-window = pygame.display.set_mode((largura, altura))
-pygame.display.set_caption('Fox Supremacy')
+window = pygame.display.set_mode((largura, altura)) #tamanho da tela
+pygame.display.set_caption('Fox Supremacy') #nome do jogo
 
 # ----- Inicia estruturas de dados
 game = True
@@ -17,11 +17,11 @@ altura_jacare = 75
 largura_jacare = 80
 altura_fox = 75
 largura_fox = 80
-fundo_de_tela = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 
 
