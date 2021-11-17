@@ -11,13 +11,14 @@ pygame.display.set_caption('Fox Supremacy') #nome do jogo
 # ----- Inicia estruturas de dados
 game = True
 
+
+
 # ----- Inicia assets
 
 altura_jacare = 75
 largura_jacare = 80
 altura_fox = 75
 largura_fox = 80
-#C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/ 
 fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
 fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
@@ -54,10 +55,7 @@ class Fox(pygame.sprite.Sprite):
             self.rect.right = largura
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.bottom==350:
-            self.speedy=5
-        if self.rect.bottom>550:
-            self.rect.bottom=550
+
 class Jacare(pygame.sprite.Sprite):
     def __init__(self, img):
         # Construtor da classe mãe (Sprite).
@@ -67,7 +65,7 @@ class Jacare(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = 500
         self.rect.bottom = 550
-        self.speedx = -1
+        self.speedx = 1
         self.speedy = 0
 
     def update(self):
@@ -99,9 +97,7 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
-        if event.type == pygame.KEYUP:
-            jogador.speedy=-5 #faz a raposa subir com 5 de velocidade
-        
+
     # atualiza posição ( por enquanto zerada)7
     jogador.update()
     inimigo.update()
@@ -109,7 +105,7 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
-    window.blit(fundo_de_tela2, ((700+x), 0))
+    window.blit(fundo_de_tela, ((700+x), 0))
     window.blit(jogador.image, jogador.rect)
     window.blit(inimigo.image, inimigo.rect)
 
