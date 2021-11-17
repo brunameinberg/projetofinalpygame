@@ -109,7 +109,7 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
-    window.blit(fundo_de_tela2, ((700+x), 0))
+    window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
     window.blit(inimigo.image, inimigo.rect)
 
