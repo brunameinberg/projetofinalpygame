@@ -17,13 +17,17 @@ altura_jacare = 75
 largura_jacare = 80
 altura_fox = 75
 largura_fox = 80
-fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
+fox_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 
+# variaveis globais
+x=0
 
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
@@ -34,7 +38,7 @@ class Fox(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = 130
+        self.rect.centerx = 300
         self.rect.bottom = 550
         self.speedx = 0
         self.speedy = 0
@@ -59,7 +63,7 @@ class Jacare(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = 500
         self.rect.bottom = 550
-        self.speedx = 0
+        self.speedx = -1
         self.speedy = 0
 
     def update(self):
@@ -79,7 +83,7 @@ FPS = 60
 jogador = Fox(fox_imagem)
 inimigo = Jacare(jacare_imagem)
 
-x=0
+
 # ===== Loop principal =====
 while game:
 
@@ -99,7 +103,7 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
-    window.blit(fundo_de_tela, (700-x, 0))
+    window.blit(fundo_de_tela, ((700+x), 0))
     window.blit(jogador.image, jogador.rect)
     window.blit(inimigo.image, inimigo.rect)
 
@@ -109,7 +113,7 @@ while game:
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
-    x-=10
+    x-=1
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
