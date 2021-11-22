@@ -46,8 +46,8 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
 
     def update(self):
         # Atualização da posição da raposa
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
+        self.rect.centerx += self.speedx
+        self.rect.bottom += self.speedy
 
         # Mantem dentro da tela
         if self.rect.right > largura:
@@ -76,11 +76,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-        # Mantem dentro da tela
-        if self.rect.right > largura:
-            self.rect.right = largura
-        if self.rect.left < 0:
-            self.rect.left = 0
+
 
 clock = pygame.time.Clock()
 FPS = 60
@@ -100,8 +96,9 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False #para sair do jogo
-        if event.type == pygame.KEYDOWN: #para pular
-            if event.type== pygame.K_UP:
+                     #para pular
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_SPACE:
                 jogador.speedy=-5 #faz a raposa subir com 5 de velocidade
             if event.type == pygame.K_RIGHT: 
                 jogador.speedy=0 
@@ -121,13 +118,16 @@ while game:
     window.blit(jogador.image, jogador.rect)
     window.blit(inimigo.image, inimigo.rect)
 
-
+    if x == -700:
+        x = 0
+    else:
+        x-=1
     
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
-    x-=1 #para o fundo andar no sentido correto
+ #para o fundo andar no sentido correto
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados

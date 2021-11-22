@@ -91,7 +91,6 @@ while game:
 
     clock.tick(FPS)
 
-
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
