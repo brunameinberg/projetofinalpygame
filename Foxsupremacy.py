@@ -22,21 +22,21 @@ largura_fox = 80
 altura_bala = 20
 largura_bala = 30 
 #C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/ 
-fundo_de_tela = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('github/projetofinalpygame/imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-fox_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/fox2.png').convert_alpha()
+fox_imagem2 = pygame.image.load('imagens/fox2.png').convert_alpha()
 fox_imagem2 = pygame.transform.scale(fox_imagem2, (largura_fox, altura_fox))
-fox_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/fox3.png').convert_alpha()
+fox_imagem3 = pygame.image.load('imagens/fox3.png').convert_alpha()
 fox_imagem3 = pygame.transform.scale(fox_imagem3, (largura_fox, altura_fox))
-fox_imagem4 = pygame.image.load('github/projetofinalpygame/imagens/fox4.png').convert_alpha()
+fox_imagem4 = pygame.image.load('imagens/fox4.png').convert_alpha()
 fox_imagem4 = pygame.transform.scale(fox_imagem4, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('github/projetofinalpygame/imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
-bala_imagem = pygame.image.load('github/projetofinalpygame/imagens/bala.png').convert_alpha()
+bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
 
 # variaveis globais
@@ -178,6 +178,7 @@ while game:
     todos_objetos.draw(window)
 
     hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True)
+    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, True, True)
     if len(hits)>0:
         game = False
 
