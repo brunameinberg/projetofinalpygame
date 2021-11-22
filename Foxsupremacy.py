@@ -58,6 +58,7 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
         self.todos_objetos = todos_objetos
         self.grupo_balas = grupo_balas
         self.bala_imagem = bala_imagem
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         # Atualização da posição da raposa
@@ -69,7 +70,7 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
             self.rect.right = largura #mantem na tela
         if self.rect.left < 0:
             self.rect.left = 0 #mantem na tela
-        if self.rect.bottom<350: #quando pula
+        if self.rect.bottom<440: #quando pula
             self.speedy=3 #cai com velocidade 5
         if self.rect.bottom>550: # quando pula demais
             self.rect.bottom=550 #volta para o chão
@@ -93,6 +94,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect.bottom = 550
         self.speedx = random.randrange(-5.0, -2.0) #move o jacaré junto com a tela
         self.speedy = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         # Atualização da posição do jacaré
@@ -111,6 +113,7 @@ class Bullet(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
 
         # Coloca no lugar inicial definido em x, y do constutor
         self.rect.centerx = centerx
@@ -177,8 +180,8 @@ while game:
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
 
-    hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True)
-    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, True, True)
+    hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True, pygame.sprite.collide_mask)
+    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, True, True, pygame.sprite.collide_mask)
     if len(hits)>0:
         game = False
 
