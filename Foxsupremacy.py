@@ -18,13 +18,13 @@ largura_jacare = 80
 altura_fox = 75
 largura_fox = 80
 #C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/ 
-fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 
 # variaveis globais
