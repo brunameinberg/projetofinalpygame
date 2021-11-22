@@ -16,18 +16,28 @@ game = True
 # ----- Inicia assets
 
 altura_jacare = 75
-largura_jacare = 80
+largura_jacare = 80 
 altura_fox = 75
 largura_fox = 80
+altura_bala = 20
+largura_bala = 30 
 #C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/ 
-fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('github/projetofinalpygame/imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
+fox_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/fox2.png').convert_alpha()
+fox_imagem2 = pygame.transform.scale(fox_imagem2, (largura_fox, altura_fox))
+fox_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/fox3.png').convert_alpha()
+fox_imagem3 = pygame.transform.scale(fox_imagem3, (largura_fox, altura_fox))
+fox_imagem4 = pygame.image.load('github/projetofinalpygame/imagens/fox4.png').convert_alpha()
+fox_imagem4 = pygame.transform.scale(fox_imagem4, (largura_fox, altura_fox))
+jacare_imagem = pygame.image.load('github/projetofinalpygame/imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
+bala_imagem = pygame.image.load('github/projetofinalpygame/imagens/bala.png').convert_alpha()
+bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
 
 # variaveis globais
 x=0
@@ -35,7 +45,7 @@ x=0
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
 class Fox(pygame.sprite.Sprite): #classe da raposa
-    def __init__(self, img):
+    def __init__(self, img, todos_objetos, grupo_balas, bala_imagem):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
@@ -45,6 +55,9 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
         self.rect.bottom = 550 #posição raposa eixo y
         self.speedx = 0
         self.speedy = 0
+        self.todos_objetos = todos_objetos
+        self.grupo_balas = grupo_balas
+        self.bala_imagem = bala_imagem
 
     def update(self):
         # Atualização da posição da raposa
@@ -60,6 +73,14 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
             self.speedy=3 #cai com velocidade 5
         if self.rect.bottom>550: # quando pula demais
             self.rect.bottom=550 #volta para o chão
+
+
+    def shoot(self):
+        # A nova bala vai ser criada logo acima e no centro horizontal da nave
+        nova_bala = Bullet(self.bala_imagem, self.rect.bottom-25 , self.rect.centerx+44)
+        self.todos_objetos.add(nova_bala)
+        self.grupo_balas.add(nova_bala)
+
 
 class Jacare(pygame.sprite.Sprite): #classe do jacaré
     def __init__(self, img):
@@ -80,6 +101,29 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
 
         if self.rect.left < -largura_jacare:
             self.rect.x = random.randint(700+largura_jacare, 1400)
+
+
+class Bullet(pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__(self, img, bottom, centerx):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+
+        # Coloca no lugar inicial definido em x, y do constutor
+        self.rect.centerx = centerx
+        self.rect.bottom = bottom
+        self.speedx = 10  # Velocidade fixa para cima
+
+    def update(self):
+        # A bala só se move no eixo y
+        self.rect.x += self.speedx
+
+        # Se o tiro passar do inicio da tela, morre.
+        if self.rect.centerx > 715:
+            self.kill()
             
 
 
@@ -87,11 +131,14 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
 clock = pygame.time.Clock()
 FPS = 60
 
-jogador = Fox(fox_imagem)
-inimigo = Jacare(jacare_imagem)
-
 todos_objetos = pygame.sprite.Group()
 grupo_jacare = pygame.sprite.Group()
+grupo_balas = pygame.sprite.Group()
+
+jogador = Fox(fox_imagem, todos_objetos, grupo_balas, bala_imagem)
+inimigo = Jacare(jacare_imagem)
+
+
 grupo_jacare.add(inimigo)
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
@@ -115,6 +162,8 @@ while game:
                     jogador.speedy=-4 #faz a raposa subir com 5 de velocidade
             if event.key == pygame.K_RIGHT: 
                 jogador.speedy=0
+            if event.key == pygame.K_SPACE:
+                jogador.shoot()
         
         '''TEM QUE ARRUMAR ESSA PARTE AQUI DE CIMA PORQUE ANTES TODAS TECLAS AVAM PRS PULAR E AGORA NAO PULA'''
 
