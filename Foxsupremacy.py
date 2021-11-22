@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 pygame.init()
 
@@ -126,6 +127,7 @@ while game:
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
 
+    # ------- Fundo infinito
     if x == -700:
         x = 0
     else:
