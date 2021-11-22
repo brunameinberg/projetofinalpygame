@@ -56,8 +56,8 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
             self.rect.right = largura #mantem na tela
         if self.rect.left < 0:
             self.rect.left = 0 #mantem na tela
-        if self.rect.bottom==350: #quando pula
-            self.speedy=5 #pula com velocidade 5
+        if self.rect.bottom<350: #quando pula
+            self.speedy=3 #cai com velocidade 5
         if self.rect.bottom>550: # quando pula demais
             self.rect.bottom=550 #volta para o chão
 
@@ -70,7 +70,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect = self.image.get_rect()
         self.rect.centerx = 700 + largura_jacare
         self.rect.bottom = 550
-        self.speedx = random.randrange(-3.0, -1.0) #move o jacaré junto com a tela
+        self.speedx = random.randrange(-5.0, -2.0) #move o jacaré junto com a tela
         self.speedy = 0
 
     def update(self):
@@ -79,7 +79,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect.y += self.speedy
 
         if self.rect.left < -largura_jacare:
-            self.rect.x = 700 + largura_jacare
+            self.rect.x = random.randint(700+largura_jacare, 1400)
             
 
 
@@ -91,6 +91,8 @@ jogador = Fox(fox_imagem)
 inimigo = Jacare(jacare_imagem)
 
 todos_objetos = pygame.sprite.Group()
+grupo_jacare = pygame.sprite.Group()
+grupo_jacare.add(inimigo)
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
 
@@ -108,12 +110,11 @@ while game:
             game = False #para sair do jogo
                      #para pular
         if event.type == pygame.KEYDOWN:
-            if event.type == pygame.K_SPACE:
-                jogador.speedy=-5 #faz a raposa subir com 5 de velocidade
-            if event.type == pygame.K_RIGHT: 
-                jogador.speedy=0 
-            if event.type == pygame.K_LEFT:
-                jogador.speedy=0 
+            if jogador.rect.bottom >= 550:
+                if event.key == pygame.K_UP:
+                    jogador.speedy=-4 #faz a raposa subir com 5 de velocidade
+            if event.key == pygame.K_RIGHT: 
+                jogador.speedy=0
         
         '''TEM QUE ARRUMAR ESSA PARTE AQUI DE CIMA PORQUE ANTES TODAS TECLAS AVAM PRS PULAR E AGORA NAO PULA'''
 
@@ -127,11 +128,15 @@ while game:
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
 
+    hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True)
+    if len(hits)>0:
+        game = False
+
     # ------- Fundo infinito
-    if x == -700:
+    if x <= -700:
         x = 0
     else:
-        x-=1
+        x-=2
     
 
     # ----- Atualiza estado do jogo
