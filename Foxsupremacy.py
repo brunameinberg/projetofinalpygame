@@ -38,6 +38,13 @@ jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
+fox_anim = []
+for i in range(4):
+    # Os arquivos de animação são numerados de 00 a 08
+    filename = 'imagens/fox{}.png'.format(i+1)
+    img = pygame.image.load(filename).convert_alpha()
+    img = pygame.transform.scale(img, (75, 80))
+    fox_anim.append(img)
 
 # variaveis globais
 x=0
@@ -45,11 +52,14 @@ x=0
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
 class Fox(pygame.sprite.Sprite): #classe da raposa
-    def __init__(self, img, todos_objetos, grupo_balas, bala_imagem):
+    def __init__(self, img, todos_objetos, grupo_balas, bala_imagem, center):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = img 
+
+        self.fox_anim = fox_anim
+        self.frame = 0  # Armazena o índice atual na animação
+        self.image = self.fox_anim[self.frame]  # Pega a primeira imagem
         self.rect = self.image.get_rect()
         self.rect.centerx = 300 #possição raposa eixo x
         self.rect.bottom = 550 #posição raposa eixo y
@@ -59,6 +69,20 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
         self.grupo_balas = grupo_balas
         self.bala_imagem = bala_imagem
         self.mask = pygame.mask.from_surface(self.image)
+        self.step = 10
+
+
+        # Armazena a animação de explosão
+        
+
+        # Inicia o processo de animação colocando a primeira imagem na tela.
+        
+          # Posiciona o centro da imagem
+
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        # Quando pygame.time.get_ticks() - self.last_update > self.frame_ticks a
+        # próxima imagem da animação será mostrada
+        
 
     def update(self):
         # Atualização da posição da raposa
@@ -74,6 +98,22 @@ class Fox(pygame.sprite.Sprite): #classe da raposa
             self.speedy=3 #cai com velocidade 5
         if self.rect.bottom>550: # quando pula demais
             self.rect.bottom=550 #volta para o chão
+        
+
+        # Avança um quadro.
+        self.frame+=1
+        if self.frame>=self.step*4:
+            self.frame=0
+        if self.frame % self.step == 0:
+            index = self.frame // 10
+            center = self.rect.center
+            self.image = self.fox_anim[index]
+            self.rect = self.image.get_rect()
+            self.rect.center = center
+        
+
+            
+
 
 
     def shoot(self):
@@ -127,7 +167,7 @@ class Bullet(pygame.sprite.Sprite):
         # Se o tiro passar do inicio da tela, morre.
         if self.rect.centerx > 715:
             self.kill()
-            
+
 
 
 
@@ -138,13 +178,15 @@ todos_objetos = pygame.sprite.Group()
 grupo_jacare = pygame.sprite.Group()
 grupo_balas = pygame.sprite.Group()
 
-jogador = Fox(fox_imagem, todos_objetos, grupo_balas, bala_imagem)
+jogador = Fox(fox_imagem, todos_objetos, grupo_balas, bala_imagem, 300)
 inimigo = Jacare(jacare_imagem)
 
 
 grupo_jacare.add(inimigo)
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
+
+
 
 
 # ===== Loop principal =====
@@ -180,9 +222,15 @@ while game:
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
 
+    
+
     hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True, pygame.sprite.collide_mask)
-    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, True, True, pygame.sprite.collide_mask)
-    if len(hits)>0:
+    
+    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, False, False, pygame.sprite.collide_mask)
+    for hit in hits2:
+        grupo_jacare.kill
+    
+    if len(hits)>3:
         game = False
 
     # ------- Fundo infinito
