@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 
@@ -18,13 +19,13 @@ largura_jacare = 80
 altura_fox = 75
 largura_fox = 80
 #C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/ 
-fundo_de_tela = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('C:/Users/lucas/Documents/Insper/1Semestre/Dessoft 2021.2/github/projetofinalpygame/imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 
 # variaveis globais
@@ -66,15 +67,19 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = 500
+        self.rect.centerx = 700 + largura_jacare
         self.rect.bottom = 550
-        self.speedx = -1 #move o jacaré junto com a tela
+        self.speedx = random.randrange(-3.0, -1.0) #move o jacaré junto com a tela
         self.speedy = 0
 
     def update(self):
         # Atualização da posição do jacaré
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+
+        if self.rect.left < -largura_jacare:
+            self.rect.x = 700 + largura_jacare
+            
 
 
 
@@ -83,6 +88,10 @@ FPS = 60
 
 jogador = Fox(fox_imagem)
 inimigo = Jacare(jacare_imagem)
+
+todos_objetos = pygame.sprite.Group()
+todos_objetos.add(inimigo)
+todos_objetos.add(jogador)
 
 
 # ===== Loop principal =====
@@ -108,15 +117,14 @@ while game:
         '''TEM QUE ARRUMAR ESSA PARTE AQUI DE CIMA PORQUE ANTES TODAS TECLAS AVAM PRS PULAR E AGORA NAO PULA'''
 
     # atualiza posição ( por enquanto zerada)
-    jogador.update()
-    inimigo.update()
+    todos_objetos.update()
 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
-    window.blit(inimigo.image, inimigo.rect)
+    todos_objetos.draw(window)
 
     if x == -700:
         x = 0
