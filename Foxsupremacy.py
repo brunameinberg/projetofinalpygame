@@ -218,8 +218,7 @@ while game:
             if event.key == pygame.K_SPACE:
                 jogador.shoot()
         
-        '''TEM QUE ARRUMAR ESSA PARTE AQUI DE CIMA PORQUE ANTES TODAS TECLAS AVAM PRS PULAR E AGORA NAO PULA'''
-
+        
     # atualiza posição ( por enquanto zerada)
     todos_objetos.update()
 
