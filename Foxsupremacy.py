@@ -46,6 +46,13 @@ for i in range(4):
     img = pygame.transform.scale(img, (75, 80))
     fox_anim.append(img)
 
+#carrega o som
+
+pygame.mixer.music.load('sons/mfundoof.wav') #musica de fundo
+pygame.mixer.music.set_volume(0.4) #define o volume
+bullet_sound=pygame.mixer.Sound('sons/bala.wav') #som da bala
+
+
 # variaveis globais
 x=0
 
@@ -190,8 +197,9 @@ todos_objetos.add(jogador)
 
 
 # ===== Loop principal =====
+pygame.mixer.music.play(loops=-1)
 while game:
-
+    
     clock.tick(FPS)
 
 
