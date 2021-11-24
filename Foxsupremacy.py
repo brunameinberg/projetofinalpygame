@@ -150,6 +150,9 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
 
         if self.rect.left < -largura_jacare:
             self.rect.x = random.randint(700+largura_jacare, 1400)
+        
+        
+            
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -222,23 +225,28 @@ while game:
     # atualiza posição ( por enquanto zerada)
     todos_objetos.update()
 
-    # ----- Gera saídas
-    window.fill((0, 0, 0))  # Preenche com a cor branca
-    window.blit(fundo_de_tela, (x, 0))
-    window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
-    window.blit(jogador.image, jogador.rect)
-    todos_objetos.draw(window)
+    
 
     
 
     hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True, pygame.sprite.collide_mask)
     
-    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, False, False, pygame.sprite.collide_mask)
-    for hit in hits2:
-        grupo_jacare.kill
+    hits2 = pygame.sprite.groupcollide(grupo_balas, grupo_jacare, True, True, pygame.sprite.collide_mask)
     
-    if len(hits)>3:
-        game = False
+    for hit in hits:
+        inimigo=Jacare(jacare_imagem)
+        grupo_jacare.add(inimigo)
+        todos_objetos.add(inimigo)
+        if len(hits)>3:
+            game = False
+
+        
+    for hit in hits2:
+        inimigo=Jacare(jacare_imagem)
+        grupo_jacare.add(inimigo)
+        todos_objetos.add(inimigo)
+
+    
 
     # ------- Fundo infinito
     if x <= -700:
@@ -246,6 +254,12 @@ while game:
     else:
         x-=2
     
+    # ----- Gera saídas
+    window.fill((0, 0, 0))  # Preenche com a cor branca
+    window.blit(fundo_de_tela, (x, 0))
+    window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
+    window.blit(jogador.image, jogador.rect)
+    todos_objetos.draw(window)
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
@@ -254,3 +268,9 @@ while game:
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+
+
+
+#placar
+#aceleração
+#vidas
