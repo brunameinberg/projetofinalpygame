@@ -22,6 +22,8 @@ altura_fox = 75
 largura_fox = 80
 altura_bala = 20
 largura_bala = 30 
+altura_coracao = 20
+largura_coracao = 30 
 #----imagens
 fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
@@ -39,6 +41,10 @@ jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
+coracao_imagem = pygame.image.load('coracao.png').convert_alpha()
+coracao_imagem = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
+
+
 
 #-----para animação da raposa
 fox_anim = []
@@ -54,6 +60,7 @@ for i in range(4):
 pygame.mixer.music.load('sons/mfundoof.wav') #musica de fundo
 pygame.mixer.music.set_volume(0.4) #define o volume
 bullet_sound=pygame.mixer.Sound('sons/bala.wav') #som da bala
+
 
 
 #-----variaveis globais
