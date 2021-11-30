@@ -41,7 +41,7 @@ jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
 bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
-coracao_imagem = pygame.image.load('coracao.png').convert_alpha()
+coracao_imagem = pygame.image.load('imagens/coracao.png').convert_alpha()
 coracao_imagem = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
 
 
