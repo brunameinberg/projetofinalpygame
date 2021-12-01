@@ -5,7 +5,7 @@ Integrantes: Bruna Lima Meinberg, Lucas Novais de Oliveira e Mariana Araújo de 
 
 Com o fim do curso de Design de Software no INSPER (Instituto de Ensino e Pesquisa), foi proposto aos alunos a criação de um jogo com objetivo de, não somente demonstrar os ensinamentos aprendidos ao longo do semestre, mas também exercitar o uso da lógica, criatividade e trabalho em equipe.
 
-O grupo buscou uma forma divertida para colocar os valiosos aprendizados em prática, criando, dessa forma, o Fox Supremacy (em tradução literal, 'Supremacia da Raposa'). O jogo é inspirado por uma rivalidade amigável entre o INSPER e outra faculdade e, com ele, foi possível compactar, em um único código e de forma divertida, importantes funções e componentes da linguagem Python.
+O grupo buscou uma forma divertida para colocar os valiosos aprendizados em prática, criando, dessa forma, o Fox Supremacy (em tradução literal, 'Supremacia da Raposa'). O jogo é inspirado por uma rivalidade amigável entre o INSPER e outra faculdade e, com ele, foi possível compactar, em um único código, forma divertida, importantes funções e componentes da linguagem Python.
 
 Em suma, o objetivo principal do jogador é, além de se divertir, sobreviver. Os comandos permitem desviar e atirar nos jacarés que aparecem na tela. O personagem do jogador é uma raposa! Mascote da nossa querida faculdade. 
 
