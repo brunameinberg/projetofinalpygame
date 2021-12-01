@@ -254,7 +254,7 @@ while inicial:
     posicao_inical_texto1.center = (350, 150)
     inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, (255,255,255))
     posicao_inical_texto2 = inicial_texto2.get_rect()
-    posicao_inical_texto2.center = (350, 375)
+    posicao_inical_texto2.center = (350, 450)
     window.blit(inicial_texto1, posicao_inical_texto1)
     window.blit(inicial_texto2, posicao_inical_texto2)
 
