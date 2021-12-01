@@ -32,37 +32,37 @@ largura_coracao = 70
 altura_arma = 70
 largura_arma = 60
 #----imagens     github/projetofinalpygame/
-fundo_de_tela = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('github/projetofinalpygame/imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-fox_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/fox2.png').convert_alpha()
+fox_imagem2 = pygame.image.load('imagens/fox2.png').convert_alpha()
 fox_imagem2 = pygame.transform.scale(fox_imagem2, (largura_fox, altura_fox))
-fox_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/fox3.png').convert_alpha()
+fox_imagem3 = pygame.image.load('imagens/fox3.png').convert_alpha()
 fox_imagem3 = pygame.transform.scale(fox_imagem3, (largura_fox, altura_fox))
-fox_imagem4 = pygame.image.load('github/projetofinalpygame/imagens/fox4.png').convert_alpha()
+fox_imagem4 = pygame.image.load('imagens/fox4.png').convert_alpha()
 fox_imagem4 = pygame.transform.scale(fox_imagem4, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('github/projetofinalpygame/imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
-bala_imagem = pygame.image.load('github/projetofinalpygame/imagens/bala.png').convert_alpha()
+bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
-coracao_imagem = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
+coracao_imagem = pygame.image.load('imagens/coracao.png').convert_alpha()
 coracao_imagem = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
 coracao_imagem2 = coracao_imagem
 coracao_imagem3 = coracao_imagem
-arma_imagem = pygame.image.load('github/projetofinalpygame/imagens/arma.png').convert_alpha()
+arma_imagem = pygame.image.load('imagens/arma.png').convert_alpha()
 arma_imagem = pygame.transform.scale(arma_imagem, (largura_arma, altura_arma))
-fonte = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 30)
-fonte2 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 50)
-fonte3 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 20)
-fonte4 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 40)
-fundo_inicial = pygame.image.load('github/projetofinalpygame/imagens/inicio2.png').convert_alpha()
+fonte = pygame.font.Font('imagens/fonte.ttf', 30)
+fonte2 = pygame.font.Font('imagens/fonte.ttf', 50)
+fonte3 = pygame.font.Font('imagens/fonte.ttf', 20)
+fonte4 = pygame.font.Font('imagens/fonte.ttf', 40)
+fundo_inicial = pygame.image.load('imagens/inicio2.png').convert_alpha()
 fundo_inicial = pygame.transform.scale(fundo_inicial, (largura, altura))
-instru = pygame.image.load('github/projetofinalpygame/imagens/instru.png').convert_alpha()
+instru = pygame.image.load('imagens/instru.png').convert_alpha()
 instru = pygame.transform.scale(instru, (300, 200))
-fundo_final = pygame.image.load('github/projetofinalpygame/imagens/gameover.png').convert_alpha()
+fundo_final = pygame.image.load('imagens/gameover.png').convert_alpha()
 fundo_final = pygame.transform.scale(fundo_final, (largura, altura))
 
 coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
@@ -73,16 +73,16 @@ ponto_arma = (330, 15)
 fox_anim = []
 for i in range(4):
     # Os arquivos de animação são numerados de 00 a 08
-    filename = 'github/projetofinalpygame/imagens/fox{}.png'.format(i+1)
+    filename = 'imagens/fox{}.png'.format(i+1)
     img = pygame.image.load(filename).convert_alpha()
     img = pygame.transform.scale(img, (75, 80))
     fox_anim.append(img)
 
 #-----carrega o som
 
-pygame.mixer.music.load('github/projetofinalpygame/sons/mfundoof.wav') #musica de fundo
+pygame.mixer.music.load('sons/mfundoof.wav') #musica de fundo
 pygame.mixer.music.set_volume(0.4) #define o volume
-bullet_sound=pygame.mixer.Sound('github/projetofinalpygame/sons/bala.wav') #som da bala
+bullet_sound=pygame.mixer.Sound('sons/bala.wav') #som da bala
 
 
 
