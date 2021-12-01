@@ -55,8 +55,13 @@ coracao_imagem3 = coracao_imagem
 arma_imagem = pygame.image.load('github/projetofinalpygame/imagens/arma.png').convert_alpha()
 arma_imagem = pygame.transform.scale(arma_imagem, (largura_arma, altura_arma))
 fonte = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 30)
-fundo_inicial = pygame.image.load('github/projetofinalpygame/imagens/incial.png').convert_alpha()
+fonte2 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 50)
+fonte3 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 20)
+fonte4 = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 40)
+fundo_inicial = pygame.image.load('github/projetofinalpygame/imagens/inicio2.png').convert_alpha()
 fundo_inicial = pygame.transform.scale(fundo_inicial, (largura, altura))
+fundo_final = pygame.image.load('github/projetofinalpygame/imagens/gameover.png').convert_alpha()
+fundo_final = pygame.transform.scale(fundo_final, (largura, altura))
 
 coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
 pontos_coracoes = [(20, 20), (90, 20), (160, 20)]
@@ -85,6 +90,8 @@ contador_balas = 0
 vidas = 3
 aceleracao = 1
 placar = 0
+pausa_inicial = True
+contador_mais100 = 0
 
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
@@ -234,10 +241,26 @@ while inicial:
             inicial = False
             game = False #para sair do jogo
             final = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                inicial = False
+        
         
 
-    window.fill((255, 0, 0))  # Preenche com a cor branca
+    window.fill((0, 0, 0)) 
     window.blit(fundo_inicial, (0, 0))
+    inicial_texto1 = fonte2.render("Fox Supremacy", True, (150,0,0))
+    posicao_inical_texto1 = inicial_texto1.get_rect()
+    posicao_inical_texto1.center = (350, 150)
+    inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, (255,255,255))
+    posicao_inical_texto2 = inicial_texto2.get_rect()
+    posicao_inical_texto2.center = (350, 375)
+    window.blit(inicial_texto1, posicao_inical_texto1)
+    window.blit(inicial_texto2, posicao_inical_texto2)
+
+    pygame.display.update()
+
+
 
 
 while game:
@@ -264,8 +287,9 @@ while game:
     # atualiza posição ( por enquanto zerada)
     todos_objetos.update()
 
+
     
-#--------------colisões--------------
+    #--------------colisões--------------
     #JOGADOR COM JACARÉ:
     hits = pygame.sprite.spritecollide(jogador, grupo_jacare, True, pygame.sprite.collide_mask)
     
@@ -281,9 +305,12 @@ while game:
             game = False
         
     for hit in hits2:
+        placar+=100
+        contador_mais100+=1
         inimigo=Jacare(jacare_imagem)
         grupo_jacare.add(inimigo)
         todos_objetos.add(inimigo) #para o jacaré aparecer de novo
+        
         
         
         
@@ -296,15 +323,18 @@ while game:
     else:
         x-=(3*aceleracao)
 
+    if contador_mais100 > 2*FPS:
+        contador_mais100 = 0
+    if contador_mais100 > 0:
+        contador_mais100+=1
+
     # timer das balas
     if contador_balas >= 5*FPS: #transforma p segundos
         contador_balas = 0
     if contador_balas > 0:
         contador_balas+=1
 
-    #AUMENTA O PLACAR
-    placar+=int(aceleracao//1)
-
+    
     # aumenta a aceleracao
     if placar>1000:
         aceleracao = math.log(placar,10)-2
@@ -318,6 +348,12 @@ while game:
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
+    if contador_mais100 > 0:
+        mais100 = fonte3.render("+100", True, (255,0,0))
+        posicao_mais100 = mais100.get_rect()
+        posicao_mais100.center = (650, 80)
+        window.blit(mais100, posicao_mais100)
+        
     if contador_balas == 0:
         window.blit(arma_imagem, ponto_arma)
     for i in range(0, vidas):
@@ -328,12 +364,53 @@ while game:
     posicao_placar.center = (575, 50)
     window.blit(placar_texto, posicao_placar)
 
+    
+
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
- #para o fundo andar no sentido correto
+    if pausa_inicial:
+        time.sleep(2)
+        pausa_inicial = False
 
-# ===== Finalização =====
+    #AUMENTA O PLACAR
+    placar+=int(aceleracao//1)
+
+
+
+while final:
+
+    clock.tick(FPS)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            final = False
+        if event.type == pygame.KEYDOWN:
+            final = False
+        
+        
+
+    window.fill((0, 0, 0)) 
+    window.blit(fundo_final, (0, 0))
+    final_texto1 = fonte2.render("Fox Supremacy", True, (255,255,255))
+    posicao_final_texto1 = final_texto1.get_rect()
+    posicao_final_texto1.center = (350, 100)
+    final_texto2 = fonte.render("Sua pontuação:", True, (255,255,255))
+    posicao_final_texto2 = final_texto2.get_rect()
+    posicao_final_texto2.center = (350, 450)
+    final_texto3 = fonte.render("{} pontos".format(placar), True, (255,255,255))
+    posicao_final_texto3 = final_texto3.get_rect()
+    posicao_final_texto3.center = (350, 500)
+    window.blit(final_texto1, posicao_final_texto1)
+    window.blit(final_texto2, posicao_final_texto2)
+    window.blit(final_texto3, posicao_final_texto3)
+
+    pygame.display.update()
+
+
+
+
+
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
 
