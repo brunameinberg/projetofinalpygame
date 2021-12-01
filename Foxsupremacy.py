@@ -3,6 +3,7 @@ import pygame
 import random
 from pygame import time
 import time
+import math
 
 pygame.init()
 
@@ -25,6 +26,8 @@ altura_bala = 20
 largura_bala = 30 
 altura_coracao = 60
 largura_coracao = 70
+altura_arma = 70
+largura_arma = 60
 #----imagens     github/projetofinalpygame/
 fundo_de_tela = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
@@ -44,13 +47,15 @@ bala_imagem = pygame.image.load('github/projetofinalpygame/imagens/bala.png').co
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
 coracao_imagem = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
 coracao_imagem = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
-coracao_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
-coracao_imagem2 = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
-coracao_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
-coracao_imagem3 = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
+coracao_imagem2 = coracao_imagem
+coracao_imagem3 = coracao_imagem
+arma_imagem = pygame.image.load('github/projetofinalpygame/imagens/arma.png').convert_alpha()
+arma_imagem = pygame.transform.scale(arma_imagem, (largura_arma, altura_arma))
+fonte_placar = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 30)
 
 coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
 pontos_coracoes = [(20, 20), (90, 20), (160, 20)]
+ponto_arma = (330, 15)
 
 #-----para animação da raposa
 fox_anim = []
@@ -73,6 +78,8 @@ bullet_sound=pygame.mixer.Sound('github/projetofinalpygame/sons/bala.wav') #som 
 x=0
 contador_balas = 0
 vidas = 3
+aceleracao = 1
+placar = 0
 
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
@@ -147,7 +154,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect = self.image.get_rect()
         self.rect.centerx = 700 + largura_jacare
         self.rect.bottom = 550
-        self.speedx = random.randrange(-5.0, -3.0) #move o jacaré junto com a tela
+        self.speedx = random.randrange(-5.0, -3.0)*aceleracao #move o jacaré junto com a tela
         self.speedy = 0
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -270,13 +277,21 @@ while game:
     if x <= -700:
         x = 0
     else:
-        x-=2
+        x-=(3*aceleracao)
 
     # timer das balas
     if contador_balas >= 5*FPS: #transforma p segundos
         contador_balas = 0
     if contador_balas > 0:
         contador_balas+=1
+
+    #AUMENTA O PLACAR
+    placar+=int(aceleracao//1)
+
+    # aumenta a aceleracao
+    if placar>1000:
+        aceleracao = math.log(placar,10)-2
+
     
     # ----- Gera saídas
     
@@ -286,8 +301,15 @@ while game:
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
+    if contador_balas == 0:
+        window.blit(arma_imagem, ponto_arma)
     for i in range(0, vidas):
         window.blit(coracoes[i], pontos_coracoes[i])
+
+    placar_texto = fonte_placar.render("{:08d}".format(placar), True, (255, 255, 255))
+    posicao_placar = placar_texto.get_rect()
+    posicao_placar.center = (575, 50)
+    window.blit(placar_texto, posicao_placar)
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
