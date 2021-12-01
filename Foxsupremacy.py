@@ -413,10 +413,3 @@ while final:
 
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
-
-
-#placar
-#aceleração
-#vidas
-#arumar o pulo
-#limitar o numero de tiros
