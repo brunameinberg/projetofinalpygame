@@ -14,3 +14,5 @@ Ao longo de aproximadamente 4 semanas pensamos, criamos e executamos nossas idei
 Esperamos que façam um uso divertido e nada moderado do jogo!
 
 Ps: O código completo do jogo se encontra no arquivo 'Foxsupremacy.py'
+Ps2: Aqui vai um link do vídeo do jogo em caso de dúvidas:
+https://youtu.be/YQdq4MLzEw0 
