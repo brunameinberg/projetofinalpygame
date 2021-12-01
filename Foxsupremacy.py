@@ -2,6 +2,7 @@
 import pygame
 import random
 from pygame import time
+import time
 
 pygame.init()
 
@@ -22,49 +23,56 @@ altura_fox = 75
 largura_fox = 80
 altura_bala = 20
 largura_bala = 30 
-altura_coracao = 20
-largura_coracao = 30 
-#----imagens
-fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
+altura_coracao = 60
+largura_coracao = 70
+#----imagens     github/projetofinalpygame/
+fundo_de_tela = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
+fundo_de_tela2 = pygame.image.load('github/projetofinalpygame/imagens/fundo.png').convert_alpha()
 fundo_de_tela2 = pygame.transform.scale(fundo_de_tela, (largura, altura))
-fox_imagem = pygame.image.load('imagens/fox1.png').convert_alpha()
+fox_imagem = pygame.image.load('github/projetofinalpygame/imagens/fox1.png').convert_alpha()
 fox_imagem = pygame.transform.scale(fox_imagem, (largura_fox, altura_fox))
-fox_imagem2 = pygame.image.load('imagens/fox2.png').convert_alpha()
+fox_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/fox2.png').convert_alpha()
 fox_imagem2 = pygame.transform.scale(fox_imagem2, (largura_fox, altura_fox))
-fox_imagem3 = pygame.image.load('imagens/fox3.png').convert_alpha()
+fox_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/fox3.png').convert_alpha()
 fox_imagem3 = pygame.transform.scale(fox_imagem3, (largura_fox, altura_fox))
-fox_imagem4 = pygame.image.load('imagens/fox4.png').convert_alpha()
+fox_imagem4 = pygame.image.load('github/projetofinalpygame/imagens/fox4.png').convert_alpha()
 fox_imagem4 = pygame.transform.scale(fox_imagem4, (largura_fox, altura_fox))
-jacare_imagem = pygame.image.load('imagens/jacare.png').convert_alpha()
+jacare_imagem = pygame.image.load('github/projetofinalpygame/imagens/jacare.png').convert_alpha()
 jacare_imagem = pygame.transform.scale(jacare_imagem, (largura_jacare, altura_jacare))
-bala_imagem = pygame.image.load('imagens/bala.png').convert_alpha()
+bala_imagem = pygame.image.load('github/projetofinalpygame/imagens/bala.png').convert_alpha()
 bala_imagem = pygame.transform.scale(bala_imagem, (largura_bala, altura_bala))
-coracao_imagem = pygame.image.load('imagens/coracao.png').convert_alpha()
+coracao_imagem = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
 coracao_imagem = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
+coracao_imagem2 = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
+coracao_imagem2 = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
+coracao_imagem3 = pygame.image.load('github/projetofinalpygame/imagens/coracao.png').convert_alpha()
+coracao_imagem3 = pygame.transform.scale(coracao_imagem, (largura_coracao, altura_coracao))
 
-
+coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
+pontos_coracoes = [(20, 20), (90, 20), (160, 20)]
 
 #-----para animação da raposa
 fox_anim = []
 for i in range(4):
     # Os arquivos de animação são numerados de 00 a 08
-    filename = 'imagens/fox{}.png'.format(i+1)
+    filename = 'github/projetofinalpygame/imagens/fox{}.png'.format(i+1)
     img = pygame.image.load(filename).convert_alpha()
     img = pygame.transform.scale(img, (75, 80))
     fox_anim.append(img)
 
 #-----carrega o som
 
-pygame.mixer.music.load('sons/mfundoof.wav') #musica de fundo
+pygame.mixer.music.load('github/projetofinalpygame/sons/mfundoof.wav') #musica de fundo
 pygame.mixer.music.set_volume(0.4) #define o volume
-bullet_sound=pygame.mixer.Sound('sons/bala.wav') #som da bala
+bullet_sound=pygame.mixer.Sound('github/projetofinalpygame/sons/bala.wav') #som da bala
 
 
 
 #-----variaveis globais
 x=0
+contador_balas = 0
+vidas = 3
 
 # ----- Inicia estruturas de dados
 # Definindo os novos tipo
@@ -119,9 +127,12 @@ class Fox(pygame.sprite.Sprite):
 
     def shoot(self):
         # A nova bala vai ser criada logo acima e no centro horizontal da nave
-        nova_bala = Bullet(self.bala_imagem, self.rect.bottom-25 , self.rect.centerx+44)
-        self.todos_objetos.add(nova_bala)
-        self.grupo_balas.add(nova_bala)
+            if contador_balas == 0:
+                nova_bala = Bullet(self.bala_imagem, self.rect.bottom-25 , self.rect.centerx+44)
+                self.todos_objetos.add(nova_bala)
+                self.grupo_balas.add(nova_bala)
+                
+        
 
 #------------------------fim classe da raposa------------------------------
 
@@ -136,7 +147,7 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
         self.rect = self.image.get_rect()
         self.rect.centerx = 700 + largura_jacare
         self.rect.bottom = 550
-        self.speedx = random.randrange(-5.0, -2.0) #move o jacaré junto com a tela
+        self.speedx = random.randrange(-5.0, -3.0) #move o jacaré junto com a tela
         self.speedy = 0
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -189,15 +200,17 @@ FPS = 60
 todos_objetos = pygame.sprite.Group()
 grupo_jacare = pygame.sprite.Group()
 grupo_balas = pygame.sprite.Group()
+todos_desenhos = pygame.sprite.Group()
 
 jogador = Fox(fox_imagem, todos_objetos, grupo_balas, bala_imagem, 300)
 inimigo = Jacare(jacare_imagem)
 
-
 grupo_jacare.add(inimigo)
+
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
 
+# Pontos dos corações
 
 
 
@@ -220,7 +233,8 @@ while game:
             if event.key == pygame.K_RIGHT: 
                 jogador.speedy=0
             if event.key == pygame.K_SPACE: #apertando espaço, a raposa atira
-                jogador.shoot() 
+                jogador.shoot()
+                contador_balas+=1 
         
         
     # atualiza posição ( por enquanto zerada)
@@ -238,15 +252,17 @@ while game:
         inimigo=Jacare(jacare_imagem)
         grupo_jacare.add(inimigo)
         todos_objetos.add(inimigo) #para o jacaré aparecer de novo
-    ###########ESSA PARTE DE BAIXO TEM QUE AJUSTAR########
-        if len(hits)>3: 
+        vidas-=1
+        if vidas == 0:
             game = False
-###################################################################
         
     for hit in hits2:
         inimigo=Jacare(jacare_imagem)
         grupo_jacare.add(inimigo)
         todos_objetos.add(inimigo) #para o jacaré aparecer de novo
+        
+        
+        
 
     
 
@@ -255,13 +271,23 @@ while game:
         x = 0
     else:
         x-=2
+
+    # timer das balas
+    if contador_balas >= 5*FPS: #transforma p segundos
+        contador_balas = 0
+    if contador_balas > 0:
+        contador_balas+=1
     
     # ----- Gera saídas
+    
+
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
     todos_objetos.draw(window)
+    for i in range(0, vidas):
+        window.blit(coracoes[i], pontos_coracoes[i])
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
