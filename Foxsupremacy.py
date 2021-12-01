@@ -1,4 +1,4 @@
-#-----importa bibliotecas
+#----------------Importa bibliotecas UTILIZADAS
 from typing import Final
 import pygame
 import random
@@ -8,19 +8,18 @@ import math
 
 pygame.init()
 
-# ----- Gera tela principal
+#----------------Gera tela principal
 largura = 700
 altura = 600
 window = pygame.display.set_mode((largura, altura)) #tamanho da tela
 pygame.display.set_caption('Fox Supremacy') #nome do jogo
 
-# ----- Inicia estruturas de dados
+#----------------Inicia estruturas de dados
 game = True
 inicial = True
 final = True
 
-# ----- Inicia assets
-
+#----------------Inicia assets
 altura_jacare = 75
 largura_jacare = 80 
 altura_fox = 75
@@ -31,7 +30,8 @@ altura_coracao = 60
 largura_coracao = 70
 altura_arma = 70
 largura_arma = 60
-#----imagens     github/projetofinalpygame/
+
+#----------------Imagens     
 fundo_de_tela = pygame.image.load('imagens/fundo.png').convert_alpha()
 fundo_de_tela = pygame.transform.scale(fundo_de_tela, (largura, altura))
 fundo_de_tela2 = pygame.image.load('imagens/fundo.png').convert_alpha()
@@ -54,10 +54,6 @@ coracao_imagem2 = coracao_imagem
 coracao_imagem3 = coracao_imagem
 arma_imagem = pygame.image.load('imagens/arma.png').convert_alpha()
 arma_imagem = pygame.transform.scale(arma_imagem, (largura_arma, altura_arma))
-fonte = pygame.font.Font('imagens/fonte.ttf', 30)
-fonte2 = pygame.font.Font('imagens/fonte.ttf', 50)
-fonte3 = pygame.font.Font('imagens/fonte.ttf', 20)
-fonte4 = pygame.font.Font('imagens/fonte.ttf', 40)
 fundo_inicial = pygame.image.load('imagens/inicio2.png').convert_alpha()
 fundo_inicial = pygame.transform.scale(fundo_inicial, (largura, altura))
 instru = pygame.image.load('imagens/instru.png').convert_alpha()
@@ -65,11 +61,18 @@ instru = pygame.transform.scale(instru, (300, 200))
 fundo_final = pygame.image.load('imagens/gameover.png').convert_alpha()
 fundo_final = pygame.transform.scale(fundo_final, (largura, altura))
 
+#----------------Fontes
+fonte = pygame.font.Font('imagens/fonte.ttf', 30)
+fonte2 = pygame.font.Font('imagens/fonte.ttf', 50)
+fonte3 = pygame.font.Font('imagens/fonte.ttf', 20)
+fonte4 = pygame.font.Font('imagens/fonte.ttf', 40)
+
+#----------------Pontos e vidas
 coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
 pontos_coracoes = [(20, 20), (90, 20), (160, 20)]
 ponto_arma = (330, 15)
 
-#-----para animação da raposa
+#----------------Para animação da raposa
 fox_anim = []
 for i in range(4):
     # Os arquivos de animação são numerados de 00 a 08
@@ -78,15 +81,11 @@ for i in range(4):
     img = pygame.transform.scale(img, (75, 80))
     fox_anim.append(img)
 
-#-----carrega o som
-
+#----------------Carrega o som
 pygame.mixer.music.load('sons/mfundoof.wav') #musica de fundo
 pygame.mixer.music.set_volume(0.4) #define o volume
-bullet_sound=pygame.mixer.Sound('sons/bala.wav') #som da bala
 
-
-
-#-----variaveis globais
+#----------------Variáveis globais
 x=0
 contador_balas = 0
 vidas = 3
@@ -95,15 +94,15 @@ placar = 0
 pausa_inicial = True
 contador_mais100 = 0
 
-# ----- Inicia estruturas de dados
-# Definindo os novos tipo
+#----------------Inicia estruturas de dados
 
-#-----classe da raposa
+#==================================CLASSES==================================
+
+#----------------Classe da raposa
 class Fox(pygame.sprite.Sprite): 
     def __init__(self, img, todos_objetos, grupo_balas, bala_imagem, center):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
 
         self.fox_anim = fox_anim
         self.frame = 0  # Armazena o índice atual na animação
@@ -147,19 +146,17 @@ class Fox(pygame.sprite.Sprite):
             self.rect.center = center
 
     def shoot(self):
-        # A nova bala vai ser criada logo acima e no centro horizontal da nave
+        # A nova bala criada
             if contador_balas == 0:
                 nova_bala = Bullet(self.bala_imagem, self.rect.bottom-25 , self.rect.centerx+44)
                 self.todos_objetos.add(nova_bala)
-                self.grupo_balas.add(nova_bala)
-                
-        
+                self.grupo_balas.add(nova_bala)        
 
-#------------------------fim classe da raposa------------------------------
+#------------------------Fim classe da raposa------------------------------
 
-#-----classe do jacaré
+#----------------Classe do jacaré
 
-class Jacare(pygame.sprite.Sprite): #classe do jacaré
+class Jacare(pygame.sprite.Sprite): 
     def __init__(self, img):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -181,10 +178,9 @@ class Jacare(pygame.sprite.Sprite): #classe do jacaré
             self.rect.x = random.randint(700+largura_jacare, 1400)
         
         
-#------------------------fim classe do jacaré------------------------------     
+#------------------------Fim classe do jacaré------------------------------     
 
-
-#-----classe da bala 
+#----------------Classe da bala (munição)
 
 class Bullet(pygame.sprite.Sprite):
     # Construtor da classe.
@@ -210,13 +206,14 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 
-#------------------------fim classe da bala------------------------------     
+#------------------------Fim classe da bala------------------------------     
 
+#==================================FIM DAS CLASSES==================================
 
 clock = pygame.time.Clock()
 FPS = 60
 
-#criando grupos----------
+#==================================GRUPOS==================================
 
 todos_objetos = pygame.sprite.Group()
 grupo_jacare = pygame.sprite.Group()
@@ -231,7 +228,7 @@ grupo_jacare.add(inimigo)
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
 
-# ==================== Loop principal =====================
+#==================================LOOP PRINCIPAL==================================
 pygame.mixer.music.play(loops=-1) #inicia a música
 
 while inicial:
@@ -246,8 +243,6 @@ while inicial:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 inicial = False
-        
-        
 
     window.fill((0, 0, 0)) 
     window.blit(fundo_inicial, (0, 0))
@@ -264,8 +259,6 @@ while inicial:
     window.blit(instru, posicao_instru)
 
     pygame.display.update()
-
-
 
 
 while game:
@@ -291,8 +284,6 @@ while game:
         
     # atualiza posição ( por enquanto zerada)
     todos_objetos.update()
-
-
     
     #--------------colisões--------------
     #JOGADOR COM JACARÉ:
@@ -315,14 +306,8 @@ while game:
         inimigo=Jacare(jacare_imagem)
         grupo_jacare.add(inimigo)
         todos_objetos.add(inimigo) #para o jacaré aparecer de novo
-        
-        
-        
-        
 
-    
-
-    # ------- Fundo infinito
+    #----------------Fundo infinito
     if x <= -700:
         x = 0
     else:
@@ -333,21 +318,18 @@ while game:
     if contador_mais100 > 0:
         contador_mais100+=1
 
-    # timer das balas
+    # ----------------Timer das balas
     if contador_balas >= 5*FPS: #transforma p segundos
         contador_balas = 0
     if contador_balas > 0:
         contador_balas+=1
 
-    
-    # aumenta a aceleracao
+    # ----------------Aumenta a aceleração
     if placar>1000:
         aceleracao = math.log(placar,10)-2
 
+    # ----------------Gera saídas
     
-    # ----- Gera saídas
-    
-
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
@@ -369,16 +351,14 @@ while game:
     posicao_placar.center = (575, 50)
     window.blit(placar_texto, posicao_placar)
 
-    
-
-    # ----- Atualiza estado do jogo
+    # ----------------Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
     if pausa_inicial:
         time.sleep(2)
         pausa_inicial = False
 
-    #AUMENTA O PLACAR
+    # ----------------Aumenta o placar
     placar+=int(aceleracao//1)
 
 
@@ -392,7 +372,6 @@ while final:
             final = False
         if event.type == pygame.KEYDOWN:
             final = False
-        
         
 
     window.fill((0, 0, 0)) 
@@ -414,7 +393,8 @@ while final:
 
 
 
-
-
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
+
+
+#FIM DO CÓDIGO
