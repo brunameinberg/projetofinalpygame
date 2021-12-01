@@ -1,4 +1,5 @@
 #-----importa bibliotecas
+from typing import Final
 import pygame
 import random
 from pygame import time
@@ -15,6 +16,8 @@ pygame.display.set_caption('Fox Supremacy') #nome do jogo
 
 # ----- Inicia estruturas de dados
 game = True
+inicial = True
+final = True
 
 # ----- Inicia assets
 
@@ -51,7 +54,9 @@ coracao_imagem2 = coracao_imagem
 coracao_imagem3 = coracao_imagem
 arma_imagem = pygame.image.load('github/projetofinalpygame/imagens/arma.png').convert_alpha()
 arma_imagem = pygame.transform.scale(arma_imagem, (largura_arma, altura_arma))
-fonte_placar = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 30)
+fonte = pygame.font.Font('github/projetofinalpygame/imagens/fonte.ttf', 30)
+fundo_inicial = pygame.image.load('github/projetofinalpygame/imagens/incial.png').convert_alpha()
+fundo_inicial = pygame.transform.scale(fundo_inicial, (largura, altura))
 
 coracoes = [coracao_imagem, coracao_imagem2, coracao_imagem3]
 pontos_coracoes = [(20, 20), (90, 20), (160, 20)]
@@ -217,12 +222,23 @@ grupo_jacare.add(inimigo)
 todos_objetos.add(inimigo)
 todos_objetos.add(jogador)
 
-# Pontos dos corações
-
-
-
 # ==================== Loop principal =====================
 pygame.mixer.music.play(loops=-1) #inicia a música
+
+while inicial:
+
+    clock.tick(FPS)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            inicial = False
+            game = False #para sair do jogo
+            final = False
+        
+
+    window.fill((255, 0, 0))  # Preenche com a cor branca
+    window.blit(fundo_inicial, (0, 0))
+
 
 while game:
     
@@ -233,6 +249,7 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False #para sair do jogo
+            final = False
         if event.type == pygame.KEYDOWN: #se uma tecla é apertada
             if jogador.rect.bottom >= 550:
                 if event.key == pygame.K_UP: 
@@ -306,7 +323,7 @@ while game:
     for i in range(0, vidas):
         window.blit(coracoes[i], pontos_coracoes[i])
 
-    placar_texto = fonte_placar.render("{:08d}".format(placar), True, (255, 255, 255))
+    placar_texto = fonte.render("{:08d}".format(placar), True, (255, 255, 255))
     posicao_placar = placar_texto.get_rect()
     posicao_placar.center = (575, 50)
     window.blit(placar_texto, posicao_placar)
