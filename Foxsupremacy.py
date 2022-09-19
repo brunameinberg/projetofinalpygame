@@ -5,6 +5,7 @@ import random
 from pygame import time
 import time
 import math
+from ExtrairMetodo import *
 
 pygame.init()
 
@@ -93,6 +94,9 @@ aceleracao = 1
 placar = 0
 pausa_inicial = True
 contador_mais100 = 0
+cor_branco = (255, 255, 255)
+cor_preto = (0,0,0)
+posicao_x = 350
 
 #----------------Inicia estruturas de dados
 
@@ -244,14 +248,14 @@ while inicial:
             if event.key == pygame.K_SPACE:
                 inicial = False
 
-    window.fill((0, 0, 0)) 
+    window.fill(cor_preto) 
     window.blit(fundo_inicial, (0, 0))
     inicial_texto1 = fonte2.render("Fox Supremacy", True, (150,0,0))
     posicao_inical_texto1 = inicial_texto1.get_rect()
-    posicao_inical_texto1.center = (350, 150)
-    inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, (255,255,255))
+    posicao_inical_texto1.center = (posicao_x, 150)
+    inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, cor_branco)
     posicao_inical_texto2 = inicial_texto2.get_rect()
-    posicao_inical_texto2.center = (350, 380)
+    posicao_inical_texto2.center = (posicao_x, 380)
     posicao_instru = inicial_texto1.get_rect()
     posicao_instru.center = (520, 410)
     window.blit(inicial_texto1, posicao_inical_texto1)
@@ -330,7 +334,7 @@ while game:
 
     # ----------------Gera saídas
     
-    window.fill((0, 0, 0))  # Preenche com a cor branca
+    window.fill(cor_preto)  # Preenche com a cor branca
     window.blit(fundo_de_tela, (x, 0))
     window.blit(fundo_de_tela2, ((700+x), 0)) #anda o fundo da tela
     window.blit(jogador.image, jogador.rect)
@@ -346,7 +350,7 @@ while game:
     for i in range(0, vidas):
         window.blit(coracoes[i], pontos_coracoes[i])
 
-    placar_texto = fonte.render("{:08d}".format(placar), True, (255, 255, 255))
+    placar_texto = fonte.render("{:08d}".format(placar), True, cor_branco)
     posicao_placar = placar_texto.get_rect()
     posicao_placar.center = (575, 50)
     window.blit(placar_texto, posicao_placar)
@@ -374,20 +378,17 @@ while final:
             final = False
         
 
-    window.fill((0, 0, 0)) 
+    window.fill(cor_preto) 
     window.blit(fundo_final, (0, 0))
-    final_texto1 = fonte2.render("Fox Supremacy", True, (255,255,255))
-    posicao_final_texto1 = final_texto1.get_rect()
-    posicao_final_texto1.center = (350, 100)
-    final_texto2 = fonte.render("Sua pontuação:", True, (255,255,255))
-    posicao_final_texto2 = final_texto2.get_rect()
-    posicao_final_texto2.center = (350, 470)
-    final_texto3 = fonte.render("{} pontos".format(placar), True, (255,255,255))
-    posicao_final_texto3 = final_texto3.get_rect()
-    posicao_final_texto3.center = (350, 520)
-    window.blit(final_texto1, posicao_final_texto1)
-    window.blit(final_texto2, posicao_final_texto2)
-    window.blit(final_texto3, posicao_final_texto3)
+    
+    final_texto1 = fonte2.render("Fox Supremacy", True, cor_branco)
+    finaliza(final_texto1, (posicao_x, 100))
+    
+    final_texto2 = fonte.render("Sua pontuação:", True, cor_branco)
+    finaliza(final_texto2, (posicao_x, 470))
+    
+    final_texto3 = fonte.render("{} pontos".format(placar), True, cor_branco)
+    finaliza(final_texto3, (posicao_x, 520))
 
     pygame.display.update()
 
