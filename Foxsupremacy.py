@@ -93,6 +93,7 @@ aceleracao = 1
 placar = 0
 pausa_inicial = True
 contador_mais100 = 0
+branco = (255, 255, 255)
 
 #----------------Inicia estruturas de dados
 
@@ -249,7 +250,7 @@ while inicial:
     inicial_texto1 = fonte2.render("Fox Supremacy", True, (150,0,0))
     posicao_inical_texto1 = inicial_texto1.get_rect()
     posicao_inical_texto1.center = (350, 150)
-    inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, (255,255,255))
+    inicial_texto2 = fonte3.render("Pressione ESPAÇO para jogar", True, branco)
     posicao_inical_texto2 = inicial_texto2.get_rect()
     posicao_inical_texto2.center = (350, 380)
     posicao_instru = inicial_texto1.get_rect()
@@ -346,7 +347,7 @@ while game:
     for i in range(0, vidas):
         window.blit(coracoes[i], pontos_coracoes[i])
 
-    placar_texto = fonte.render("{:08d}".format(placar), True, (255, 255, 255))
+    placar_texto = fonte.render("{:08d}".format(placar), True, branco)
     posicao_placar = placar_texto.get_rect()
     posicao_placar.center = (575, 50)
     window.blit(placar_texto, posicao_placar)
@@ -376,13 +377,13 @@ while final:
 
     window.fill((0, 0, 0)) 
     window.blit(fundo_final, (0, 0))
-    final_texto1 = fonte2.render("Fox Supremacy", True, (255,255,255))
+    final_texto1 = fonte2.render("Fox Supremacy", True, branco)
     posicao_final_texto1 = final_texto1.get_rect()
     posicao_final_texto1.center = (350, 100)
-    final_texto2 = fonte.render("Sua pontuação:", True, (255,255,255))
+    final_texto2 = fonte.render("Sua pontuação:", True, branco)
     posicao_final_texto2 = final_texto2.get_rect()
     posicao_final_texto2.center = (350, 470)
-    final_texto3 = fonte.render("{} pontos".format(placar), True, (255,255,255))
+    final_texto3 = fonte.render("{} pontos".format(placar), True, branco)
     posicao_final_texto3 = final_texto3.get_rect()
     posicao_final_texto3.center = (350, 520)
     window.blit(final_texto1, posicao_final_texto1)
@@ -394,7 +395,6 @@ while final:
 
 
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
 
 
 #FIM DO CÓDIGO
