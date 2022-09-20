@@ -1,4 +1,3 @@
-from Foxsupremacy import *
 largura = 700
 altura = 600
 import pygame
